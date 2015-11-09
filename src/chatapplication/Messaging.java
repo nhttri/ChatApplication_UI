@@ -11,7 +11,18 @@ import java.awt.List;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -27,6 +38,9 @@ public class Messaging extends javax.swing.JFrame {
     /**
      * Creates new form Messaging
      */
+    
+    public String Chat_User="";
+    
     public Messaging() {
         initComponents();
 
@@ -41,6 +55,8 @@ public class Messaging extends javax.swing.JFrame {
                         Chatting_User.setText(Chatting_User.getText());
                     } else {
                         Chatting_User.setText("Chat With: " + list.getSelectedValue().toString());
+                        Chat_User=list.getSelectedValue().toString();
+                        ReadFile(Chat_User+".txt");
                     }
                 }
             }
@@ -178,24 +194,61 @@ public class Messaging extends javax.swing.JFrame {
     private void SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendActionPerformed
         // TODO add your handling code here:
         String ask = "User 1: " + MessageArea.getText() + "\n";
-        String ans = "User 2: abc" + "\n";
         if (!ask.equals("User 1: \n")) {
             ContentArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
             ContentArea.append(ask);
             ContentArea.update(ContentArea.getGraphics());
         }
-
+        WriteFile(Chat_User+".txt",ask);
 //        ContentArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 //        ContentArea.append(ans);
 //        ContentArea.update(ContentArea.getGraphics());
         ContentArea.setCaretPosition(ContentArea.getText().length() - 1);
-
         MessageArea.setText("");
-
     }//GEN-LAST:event_SendActionPerformed
     /**
      * @param args the command line arguments
      */
+    
+    public void WriteFile(String FileName,String text)
+    {
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FileName, true)))) {
+            out.println(text);
+        }catch (IOException e) {
+        }
+    }
+    
+    public void ReadFile(String fileName)
+    {
+        ContentArea.setText("");
+        String line=null;
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader = 
+                new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader = 
+                new BufferedReader(fileReader);
+
+            while((line = bufferedReader.readLine()) != null) {
+                if(line!="\n")
+                    ContentArea.append(line+"\n");
+            }   
+            bufferedReader.close();         
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                "Unable to open file '" + 
+                fileName + "'");                
+        }
+        catch(IOException ex) {
+            System.out.println(
+                "Error reading file '" 
+                + fileName + "'");                  
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
