@@ -6,10 +6,17 @@
 package chatapplication;
 
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.List;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -20,29 +27,52 @@ public class Messaging extends javax.swing.JFrame {
     /**
      * Creates new form Messaging
      */
-    
-
     public Messaging() {
         initComponents();
-        
-        ArrayList<String> x = new ArrayList<String>();
-        x.add("User 1\n");
-        x.add("User 2\n");
-        x.add("User 3\n");
-        x.add("User 4\n");
-        x.add("User 5\n");
-        String[] words = new String[x.size()];
-        x.toArray(words);
-        FriendArea= new javax.swing.JTextArea();
-        FriendArea.setEditable(false);
-        FriendArea.setColumns(20);
-        FriendArea.setRows(5);
-        for(String W: words)
-        FriendArea.append(W);
-        
-        jScrollPane1.setViewportView(FriendArea);
 
-        
+        String[] data = {"User 1", "User 2", "User 3", "User 4", "User 5",
+            "User 6", "User 7", "User 8", "User 9", "User 10"};
+        final JList list = new JList(data);
+
+        list.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting() == false) {
+                    if (list.getSelectedIndex() == -1) {
+                        Chatting_User.setText(Chatting_User.getText());
+                    } else {
+                        Chatting_User.setText("Chat With: " + list.getSelectedValue().toString());
+                    }
+                }
+            }
+        });
+
+        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        list.setLayoutOrientation(JList.VERTICAL);
+        list.setVisibleRowCount(-1);
+
+        JScrollPane listScroller = new JScrollPane(list);
+        //listScroller.getViewport().setViewPosition(new Point(30,30));
+        listScroller.setLocation(30, 32);
+        listScroller.setSize(140, 320);
+
+        add(listScroller);
+
+//        ArrayList<String> x = new ArrayList<String>();
+//        x.add("User 1\n");
+//        x.add("User 2\n");
+//        x.add("User 3\n");
+//        x.add("User 4\n");
+//        x.add("User 5\n");
+//        String[] words = new String[x.size()];
+//        x.toArray(words);
+//        FriendArea= new javax.swing.JTextArea();
+//        FriendArea.setEditable(false);
+//        FriendArea.setColumns(20);
+//        FriendArea.setRows(5);
+//        for(String W: words)
+//        FriendArea.append(W);
+//        
+//        jScrollPane1.setViewportView(FriendArea);
         MessageArea.setColumns(20);
         MessageArea.setLineWrap(true);
         MessageArea.setRows(5);
@@ -53,7 +83,7 @@ public class Messaging extends javax.swing.JFrame {
         ContentArea.setFont(new java.awt.Font("Times New Roman", 0, 16)); //
         ContentArea.setLineWrap(true);
         ContentArea.setRows(5);
-        
+
         jScrollPane2.setViewportView(ContentArea);
 
     }
@@ -67,20 +97,15 @@ public class Messaging extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        FriendArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         ContentArea = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         MessageArea = new javax.swing.JTextArea();
         Send = new java.awt.Button();
         jLabel1 = new javax.swing.JLabel();
+        Chatting_User = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        FriendArea.setColumns(20);
-        FriendArea.setRows(5);
-        jScrollPane1.setViewportView(FriendArea);
 
         ContentArea.setColumns(20);
         ContentArea.setRows(5);
@@ -100,65 +125,66 @@ public class Messaging extends javax.swing.JFrame {
 
         jLabel1.setText("Friends");
 
+        Chatting_User.setForeground(new java.awt.Color(0, 0, 255));
+        Chatting_User.setText("Chat With: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(139, 139, 139)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Send, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Chatting_User, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+                        .addContainerGap(16, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Chatting_User)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    ActionListener actionListener = new ActionListener()
- {
-      public void actionPerformed(ActionEvent actionEvent) {
+    ActionListener actionListener = new ActionListener() {
+        public void actionPerformed(ActionEvent actionEvent) {
 
-          System.out.println(actionEvent.getActionCommand());
-      }
+            System.out.println(actionEvent.getActionCommand());
+        }
     };
 
     private void SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendActionPerformed
         // TODO add your handling code here:
-        String ask="User 1: "+ MessageArea.getText() + "\n";
-        String ans="User 2: abc" + "\n";
-        if(!ask.equals("User 1: \n"))
-        {
-        ContentArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        ContentArea.append(ask);
-        ContentArea.update(ContentArea.getGraphics());
+        String ask = "User 1: " + MessageArea.getText() + "\n";
+        String ans = "User 2: abc" + "\n";
+        if (!ask.equals("User 1: \n")) {
+            ContentArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+            ContentArea.append(ask);
+            ContentArea.update(ContentArea.getGraphics());
         }
-        
+
 //        ContentArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 //        ContentArea.append(ans);
 //        ContentArea.update(ContentArea.getGraphics());
@@ -203,12 +229,11 @@ public class Messaging extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Chatting_User;
     private javax.swing.JTextArea ContentArea;
-    private javax.swing.JTextArea FriendArea;
     private javax.swing.JTextArea MessageArea;
     private java.awt.Button Send;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
